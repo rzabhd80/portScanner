@@ -1,10 +1,10 @@
-from ..execptions import execption_list
+from ..execptions import SingleTonException
 
 class ArgumentParser:
     has_instance = False    
     
     def __init__(self) -> None:
-        raise Exception(execption_list)
+        raise SingleTonException()
     
 
     
