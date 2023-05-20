@@ -1,6 +1,9 @@
+from argParseer.commandParser import ArgumentParser
 
 def app():
-    pass
+    print("arg parser")
+    ArgumentParser.initArgumentParser()
+    
 
 
 
