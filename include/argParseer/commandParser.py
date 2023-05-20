@@ -1,6 +1,6 @@
-from ..execptions import SingleTonException,CommandSchemaIncorrect
 import argparse
-from commandList import commandSchema,commands
+import execptions
+from .commandList import commands, commandSchema
 
 class ArgumentParser:
     
@@ -8,7 +8,7 @@ class ArgumentParser:
     argumentParser : argparse.ArgumentParser = None
     
     def __init__(self) -> None:
-        raise SingleTonException()
+        raise execptions.SingleTonException()
     
     
     @classmethod
@@ -26,7 +26,7 @@ class ArgumentParser:
         for i in commands:
             res = commandSchema.validate(i)
             if not res :
-                raise CommandSchemaIncorrect
+                raise execptions.CommandSchemaIncorrect
         for i in commands:
             ArgumentParser.argumentParser.add_argument(i['command_name'],type=i["type"],help=i["help"])
         
