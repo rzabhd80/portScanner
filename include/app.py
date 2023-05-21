@@ -3,6 +3,7 @@ import tcpchecker
 import threading
 import datetime
 import multiprocessing
+from argParseer.commandParser import ArgumentParser
 
 def app():
     from_port = 1000
@@ -27,6 +28,9 @@ def app():
 
     for thread in threads:
         thread.join()
+    print("arg parser")
+    ArgumentParser.initArgumentParser()
+    
 
     stop_time = datetime.datetime.now()
     time_difference = stop_time - start_time
