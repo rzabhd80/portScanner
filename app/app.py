@@ -5,7 +5,11 @@ import datetime
 import multiprocessing
 from argParseer.commandParser import ArgumentParser
 
-def app():
+
+
+def app():    
+    ArgumentParser.initArgumentParser()
+    
     from_port = 1000
     until_port = 65002
     num_ports = until_port - from_port
@@ -29,8 +33,6 @@ def app():
     for thread in threads:
         thread.join()
     print("arg parser")
-    ArgumentParser.initArgumentParser()
-    
 
     stop_time = datetime.datetime.now()
     time_difference = stop_time - start_time
