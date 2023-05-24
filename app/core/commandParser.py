@@ -1,6 +1,7 @@
 import argparse
 import execptions
-from .commandList import commands, commandSchema
+import argParseer.commandList as commandList
+
 
 class ArgumentParser:
     
@@ -23,11 +24,11 @@ class ArgumentParser:
     
     @classmethod
     def mountCommands() -> bool:
-        for i in commands:
-            res = commandSchema.validate(i)
+        for i in commandList.commands:
+            res = commandList.commandSchema.validate(i)
             if not res :
                 raise execptions.CommandSchemaIncorrect
-        for i in commands:
+        for i in commandList.commands:
             ArgumentParser.argumentParser.add_argument(i['command_name'],type=i["type"],help=i["help"])
         
         ArgumentParser.argumentParser.parse_args()
