@@ -20,7 +20,6 @@ def app():
     for i in range(num_threads):
         start_port = (i * ports_per_thread) + from_port
         end_port = ports_per_thread + start_port
-        # thread = threading.Thread(target=tcp_port_scanner, args=(start_port, end_port))
         thread = threading.Thread(target=tcp_port_scanner, args=(start_port, end_port))
         threads.append(thread)
 
