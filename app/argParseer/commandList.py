@@ -1,9 +1,11 @@
 from schema import Schema
-import core.commandHandler as commandHandler
+from ..core.commandHandler import CommandHandler
 from .commandHandlers.tcpCommandHandler import TcpScannerCommandHandler
 
-commandSchema = Schema({'command_name':str,'type':int | str, 'help' : str,'commandHandler' : commandHandler.CommandHandler})
+commandSchema = Schema(
+    {'command_name': str, 'type': int | str, 'help': str, 'commandHandler': CommandHandler})
 
-commands  = [
-    {'command_name' : 'ip', 'type' : str,'help':'ip of the server to be scanned','commandHandler': TcpScannerCommandHandler()}
+commands = [
+    {'command_name': 'ip', 'type': str, 'help': 'ip of the server to be scanned',
+     'commandHandler': TcpScannerCommandHandler()}
 ]

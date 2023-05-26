@@ -1,41 +1,32 @@
 import argparse
-import execptions
-import argParseer.commandList as commandList
+
+from ..execptions import CommandSchemaIncorrect, SingleTonException
+from ..argParseer import commandList
 
 
 class ArgumentParser:
-    
-    has_instance = False    
-    argumentParser : argparse.ArgumentParser = None
-    
+    has_instance = False
+    argumentParser: argparse.ArgumentParser = None
+
     def __init__(self) -> None:
-        raise execptions.SingleTonException()
-    
-    
+        raise SingleTonException()
+
     @classmethod
-    def initArgumentParser() -> argparse.ArgumentParser:
+    def init_argument_parser(cls) -> None:
         if not ArgumentParser.has_instance and not ArgumentParser.argumentParser:
             ArgumentParser.argumentParser = argparse.ArgumentParser(prog="PortScanner!",
-                                                                description="simple port scanner cli app",
-                                                                epilog="All Rights Reserved @ RzxKhn")
+                                                                    description="simple port scanner cli app",
+                                                                    epilog="All Rights Reserved @ RzxKhn")
             ArgumentParser.has_instance = True
-            ArgumentParser.mountCommands()
-    
-    
+            ArgumentParser.mount_commands()
+
     @classmethod
-    def mountCommands() -> bool:
+    def mount_commands(cls) -> None:
         for i in commandList.commands:
             res = commandList.commandSchema.validate(i)
-            if not res :
-                raise execptions.CommandSchemaIncorrect
+            if not res:
+                raise CommandSchemaIncorrect
         for i in commandList.commands:
-            ArgumentParser.argumentParser.add_argument(i['command_name'],type=i["type"],help=i["help"])
-        
-        ArgumentParser.argumentParser.parse_args()
-    
-    
-    
-        
-        
+            ArgumentParser.argumentParser.add_argument(i['command_name'], type=i["type"], help=i["help"])
 
-    
+        ArgumentParser.argumentParser.parse_args()

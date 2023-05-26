@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
+
 class CommandHandler(ABC):
     @abstractmethod
-    def handle(slef):
+    def handle(self, *args, **kwargs):
         pass

@@ -6,10 +6,9 @@ import multiprocessing
 from core.commandParser import ArgumentParser
 
 
-
-def app():    
+def app():
     ArgumentParser.initArgumentParser()
-    
+
     from_port = 1000
     until_port = 65002
     num_ports = until_port - from_port
