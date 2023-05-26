@@ -7,8 +7,8 @@ from core.commandParser import ArgumentParser
 
 
 def app():
-    ArgumentParser.initArgumentParser()
-
+    args = ArgumentParser.init_argument_parser()
+    args.c
     from_port = 1000
     until_port = 65002
     num_ports = until_port - from_port
