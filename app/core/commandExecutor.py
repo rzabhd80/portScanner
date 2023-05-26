@@ -1,4 +1,5 @@
-from ..argParseer.commandList import commands
+#from ..argParser.commandList import commands
+import argParser.commandList as commandList
 import argparse
 
 
@@ -8,6 +9,6 @@ class CommandExecutor:
 
     @classmethod
     def execute_command(cls, arg_parser: argparse.ArgumentParser):
-        for i in commands:
-            if arg_parser.i["command_name"]:
-                i['commandHandler']()
+        [i['commandHandler']() for i in commandList.commands if
+         arg_parser.i['commandHandler'] is not None
+         and i['commandHandler']]

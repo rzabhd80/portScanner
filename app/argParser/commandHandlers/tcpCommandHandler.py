@@ -1,10 +1,10 @@
 import datetime
 import socket
 import threading
-from ...core.commandHandler import CommandHandler
+import core.commandHandler as command_handler
 
 
-class TcpScannerCommandHandler(CommandHandler):
+class TcpScannerCommandHandler(command_handler.CommandHandler):
 
     def __check_tcp_connection(self, ip: str, port: int) -> bool:
         try:
@@ -38,15 +38,8 @@ class TcpScannerCommandHandler(CommandHandler):
         threads = self.__tcp_scanner_init_thread(ip, port, from_port, until_port)
         print("Starting Threads")
         start_time = datetime.datetime.now()
-
-        for thread in threads:
-            thread.start()
-
-        for thread in threads:
-            thread.join()
-
-        print("arg parser")
-
+        [thread.start() for thread in threads]
+        [thread.join() for thread in threads]
         stop_time = datetime.datetime.now()
         time_difference = stop_time - start_time
         time_difference_seconds = time_difference.total_seconds()

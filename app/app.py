@@ -3,13 +3,15 @@ import tcpchecker
 import threading
 import datetime
 import multiprocessing
-from core.commandParser import ArgumentParser
-from .core.commandExecutor import CommandExecutor
+import core.commandExecutor as Command_executor
+import core.commandParser as Command_parser
 
 
 def app():
-    args = ArgumentParser.init_argument_parser()
-    CommandExecutor.execute_command(args)
+    args = Command_parser.ArgumentParser.init_argument_parser()
+    Command_executor.CommandExecutor.execute_command(args)
+
+
 #     from_port = 1000
 #     until_port = 65002
 #     num_ports = until_port - from_port
