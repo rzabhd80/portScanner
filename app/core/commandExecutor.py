@@ -4,7 +4,7 @@ import argparse
 
 class CommandExecutor:
     def __int__(self):
-        pass
+        raise Exception()
 
     @classmethod
     def execute_command(cls, arg_parser: argparse.ArgumentParser):
