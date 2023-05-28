@@ -18,12 +18,10 @@ class ArgumentParser:
                                                                     description="simple port scanner cli app",
                                                                     epilog="All Rights Reserved @ RzxKhn")
             ArgumentParser.has_instance = True
-            ArgumentParser.mount_commands()
-            return ArgumentParser.argumentParser
+            return ArgumentParser.mount_commands()
 
     @classmethod
-    def mount_commands(cls) -> None:
-        for i in commandList.commands:
-            ArgumentParser.argumentParser.add_argument(i['command_name'], type=i["type"],
-                                                       nargs='+', help=i["help"])
-        ArgumentParser.argumentParser.parse_args()
+    def mount_commands(cls) -> argparse.ArgumentParser.parse_args:
+        commandList.init_commands(ArgumentParser.argumentParser)        
+        args = ArgumentParser.argumentParser.parse_args()
+        return args
