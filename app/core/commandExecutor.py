@@ -13,9 +13,9 @@ class CommandExecutor:
     @classmethod
     def __commandFactory(cls,protocol : str)-> None:
         if protocol == "tcp":
-            return tcpHandler.TcpScannerCommandHandler.handle
+            return tcpHandler.TcpScannerCommandHandler()
         else :
-            return udpHandler.UdpScannerCommandHandler.handle
+            return udpHandler.UdpScannerCommandHandler.handle()
 
     @classmethod
     def execute_command(cls, arg_parser: argparse.Namespace):
@@ -28,8 +28,5 @@ class CommandExecutor:
                 starting_port,ending_port = map(int,ports.split("-"))
                 list_of_ports.append( x for x in range(starting_port,ending_port+1))
             else :
-                list_of_ports.append(int(i))
-        
-        handler = CommandExecutor.__commandFactory(protocol)
-        handler()
+                list_of_ports.append(int(ports))
                 
