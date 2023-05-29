@@ -2,10 +2,6 @@ import datetime
 import socket
 import threading
 import core.commandHandler as command_handler
-from collections.abc import Sequence
-import argparse
-from typing import Any
-import argparse
 
 
 class UdpScannerCommandHandler(command_handler.CommandHandler):
@@ -22,18 +18,19 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
             return True
 
         except (socket.timeout, ConnectionRefusedError, ConnectionResetError):
-            print(ConnectionResetError)
             return False
 
     def __udp_port_scanner_in_port_range(self, from_port: int, to_port: int, ip: str):
-        result = [self.__check_udp_connection(ip, i) for i in range(from_port, to_port)]
-        map(lambda x: print(x), [i for i in result])
+       port_list = [i for i in range(from_port,to_port+1)]
+       result = [self.__check_udp_connection(ip, i) for i in port_list]
+       result_of_port = list(zip(port_list,result))
+       [print(f"port {i[0]} is open") if i[1] == True else print(f"port {i[0]} is closed") for i in result_of_port]
 
     def __udp_scanner_init_thread(self, ip: str, from_port: int, until_port: int) -> list:
         num_ports = until_port - from_port
         num_threads = 4
         ports_per_thread = num_ports // num_threads
-
+        print("inside udp")
         threads = []
         for i in range(num_threads):
             start_port = (i * ports_per_thread) + from_port
