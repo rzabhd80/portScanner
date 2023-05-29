@@ -4,29 +4,12 @@ import threading
 import core.commandHandler as command_handler
 from collections.abc import Sequence
 import argparse
+from typing import Any
+import argparse
 
 
 class UdpScannerCommandHandler(command_handler.CommandHandler):
 
-    def __call__(self, parser: argparse.ArgumentParser, namespace: argparse.Namespace,
-                 values: str | Sequence[Any] | None, option_string: str | None = None) -> None:
-
-        ip = namespace.ip
-        ports = self.__get_ports()
-        self.handle(ip=ip, from_port=ports[0], until_port=ports[1])
-        return super().__call__(parser, namespace, values, option_string)
-
-    def __get_ports(parser: argparse.Namespace):
-        ports = parser.ports
-        list_of_ports = []
-        for i in ports:
-            if "-" in ports:
-                starting_port, ending_port = map(int, ports.split("-"))
-                list_of_ports.append(x for x in range(starting_port, ending_port + 1))
-            else:
-                raise Exception("")
-
-        return list_of_ports
 
     def __check_udp_connection(self, ip: str, port: int) -> bool:
         try:
