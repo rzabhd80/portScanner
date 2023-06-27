@@ -27,10 +27,9 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
        [print(f"port {i[0]} is open") if i[1] == True else print(f"port {i[0]} is closed") for i in result_of_port]
 
     def __udp_scanner_init_thread(self, ip: str, from_port: int, until_port: int) -> list:
-        num_ports = until_port - from_port
+        num_ports = (until_port - from_port) + 1
         num_threads = 4
         ports_per_thread = num_ports // num_threads
-        print("inside udp")
         threads = []
         for i in range(num_threads):
             start_port = (i * ports_per_thread) + from_port

@@ -7,6 +7,7 @@ import argparse
 
 def app():
     Command_parser.ArgumentParser.init_argument_parser()
-    
+
+
 if __name__ == "__main__":
     app()

@@ -22,6 +22,6 @@ class CommandFactory(argparse.Action):
     @classmethod
     def __get_ports(cls, parser: Namespace):
         ports = parser.ports
-        list_of_ports =  list(map(int, ports[0].split("-")))
-        list(list_of_ports)    
+        list_of_ports = list(map(int, ports[0].split("-")))
+        list(list_of_ports)
         return list_of_ports

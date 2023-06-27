@@ -8,22 +8,20 @@ import core.commandHandler as command_handler
 class TcpScannerCommandHandler(command_handler.CommandHandler):
 
     def __check_tcp_connection(self, ip: str, port: int) -> bool:
-        
-            tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            tcp_socket.settimeout(1)
-            res = tcp_socket.connect_ex((ip, port))
-            return True if res == 1 else False
-        
+        tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        tcp_socket.settimeout(1)
+        res = tcp_socket.connect_ex((ip, port)) 
+        tcp_socket.close()
+        return True if res == 0 else False
 
     def __tcp_port_scanner_in_port_range(self, from_port: int, to_port: int, ip: str):
-        port_list = [i for i in range(from_port,to_port+1)]
+        port_list = [i for i in range(from_port, to_port + 1)]
         result = [self.__check_tcp_connection(ip, i) for i in port_list]
-        result_of_port = list(zip(port_list,result))
-        [print(f"port {i[0]} is open") if i[1] == True else print(f"port {i[0]} is closed") for i in result_of_port]
-
+        result_of_port = list(zip(port_list, result))
+        [print(f"port {i[0]} is open") if i[1] is True else print(f"port {i[0]} is closed") for i in result_of_port]
 
     def __tcp_scanner_init_thread(self, ip: str, from_port: int, until_port: int) -> list:
-        num_ports = until_port - from_port
+        num_ports = (until_port - from_port) + 1
         num_threads = 4
         ports_per_thread = num_ports // num_threads
 
