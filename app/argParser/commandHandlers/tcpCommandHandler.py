@@ -3,16 +3,14 @@ import datetime
 import socket
 import threading
 import core.commandHandler as command_handler
-
+from contextlib import closing
 
 class TcpScannerCommandHandler(command_handler.CommandHandler):
 
     def __check_tcp_connection(self, ip: str, port: int) -> bool:
-        tcp_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        tcp_socket.settimeout(1)
-        res = tcp_socket.connect_ex((ip, port)) 
-        tcp_socket.close()
-        return True if res == 0 else False
+         with closing(socket.socket(socket.AF_INET, socket.SOCK_STREAM)) as sock:
+             sock.settimeout(1)
+             return True if  sock.connect_ex((ip,port)) == 0 else False
 
     def __tcp_port_scanner_in_port_range(self, from_port: int, to_port: int, ip: str):
         port_list = [i for i in range(from_port, to_port + 1)]
