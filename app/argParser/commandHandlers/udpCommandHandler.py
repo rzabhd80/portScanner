@@ -10,10 +10,10 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
     def __check_udp_connection(self, ip: str, port: int) -> bool:
         try:
             udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            udp_socket.settimeout(1)
             test_message = b"Test"
             udp_socket.sendto(test_message, (ip, port))
             response,addr = udp_socket.recvfrom(1024)
-            print(response)
             udp_socket.close()
             return True
 
