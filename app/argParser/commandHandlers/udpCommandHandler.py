@@ -10,10 +10,10 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
     def __check_udp_connection(self, ip: str, port: int) -> bool:
         try:
             udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-            udp_socket.settimeout(1)
             test_message = b"Test"
             udp_socket.sendto(test_message, (ip, port))
-            response, _ = udp_socket.recvfrom(1024)
+            response,addr = udp_socket.recvfrom(1024)
+            print(response)
             udp_socket.close()
             return True
 
@@ -27,15 +27,9 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
        [print(f"port {i[0]} is open") if i[1] == True else print(f"port {i[0]} is closed") for i in result_of_port]
 
     def __udp_scanner_init_thread(self, ip: str, from_port: int, until_port: int) -> list:
-        num_ports = (until_port - from_port) + 1
-        num_threads = 4
-        ports_per_thread = num_ports // num_threads
+        all_ports = [i for i in range(from_port,until_port+1)]
         threads = []
-        for i in range(num_threads):
-            start_port = (i * ports_per_thread) + from_port
-            end_port = ports_per_thread + start_port
-            thread = threading.Thread(target=self.__udp_port_scanner_in_port_range, args=(start_port, end_port, ip))
-            threads.append(thread)
+        [threads.append(threading.Thread(target=self.__udp_port_scanner_in_port_range, args=(i, i, ip))) for i in all_ports]
         return threads
 
     def handle(self, ip: str, from_port: int, until_port: int):

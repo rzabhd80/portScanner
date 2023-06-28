@@ -19,16 +19,11 @@ class TcpScannerCommandHandler(command_handler.CommandHandler):
         [print(f"port {i[0]} is open") if i[1] is True else print(f"port {i[0]} is closed") for i in result_of_port]
 
     def __tcp_scanner_init_thread(self, ip: str, from_port: int, until_port: int) -> list:
-        num_ports = (until_port - from_port) + 1
-        num_threads = 4
-        ports_per_thread = num_ports // num_threads
-
+        
         threads = []
-        for i in range(num_threads):
-            start_port = (i * ports_per_thread) + from_port
-            end_port = ports_per_thread + start_port
-            thread = threading.Thread(target=self.__tcp_port_scanner_in_port_range, args=(start_port, end_port, ip))
-            threads.append(thread)
+        all_ports = [i for i in range(from_port,until_port+1)]
+        threads = []
+        [threads.append(threading.Thread(target=self.__tcp_port_scanner_in_port_range, args=(i, i, ip))) for i in all_ports]
         return threads
 
     def handle(self, ip: str, from_port: int, until_port: int):
