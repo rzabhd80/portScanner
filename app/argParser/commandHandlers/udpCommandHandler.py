@@ -36,8 +36,8 @@ class UdpScannerCommandHandler(command_handler.CommandHandler):
         threads = self.__udp_scanner_init_thread(ip, from_port, until_port)
         print("Starting Threads")
         start_time = datetime.datetime.now()
-        map(lambda x : x.start(),threads)
-        map(lambda x : x.join(),threads)
+        [thread.start() for thread in threads]
+        [thread.join() for thread in threads]
         stop_time = datetime.datetime.now()
         time_difference = stop_time - start_time
         time_difference_seconds = time_difference.total_seconds()
